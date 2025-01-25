@@ -18,15 +18,11 @@
 
 # endif
 
-# include <limits.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <stdio.h>
+# include "../Libft/libft.h"
 
-size_t	ft_strlen(char *str);
+char	*get_strchr(char *s, int c);
+char	*get_strdup(char *s1);
+char	*get_strjoin(char *s1, char *s2);
 char	*get_next_line(int fd);
-char	*ft_strchr(char	*str, int c);
-char	*ft_strjoin(char *s1, char *s2);
 
 #endif

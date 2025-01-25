@@ -1,6 +1,6 @@
 #include "../medpart.h"
 
-static bool	is_cub_file(char *arg)
+static bool	file_cub(char *arg)
 {
 	size_t	len;
 
@@ -12,7 +12,7 @@ static bool	is_cub_file(char *arg)
 	return (true);
 }
 
-static bool	is_xpm_file(char *arg)
+static bool	file_xpm(char *arg)
 {
 	size_t	len;
 
@@ -39,19 +39,19 @@ static bool	is_dir(char *arg)
 	return (ret);
 }
 
-int	check_file(char *arg, bool cub)
+int	handle_file_error(char *arg, bool cub)
 {
 	int	fd;
 
 	if (is_dir(arg))
-		return (err_msg(arg, "Is a directory", FAILURE));
+		return (message(arg, "Is a directory", FAILURE));
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
-		return (err_msg(arg, strerror(errno), FAILURE));
+		return (message(arg, strerror(errno), FAILURE));
 	close(fd);
-	if (cub && !is_cub_file(arg))
-		return (err_msg(arg, "Not a .cub file", FAILURE));
-	if (!cub && !is_xpm_file(arg))
-		return (err_msg(arg, "Not an .xpm file", FAILURE));
+	if (cub && !file_cub(arg))
+		return (message(arg, "Not a .cub file", FAILURE));
+	if (!cub && !file_xpm(arg))
+		return (message(arg, "Not an .xpm file", FAILURE));
 	return (SUCCESS);
 }

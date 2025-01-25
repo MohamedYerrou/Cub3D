@@ -12,96 +12,96 @@
 
 #include "get_next_line.h"
 
-char	*read_fun(int fd, char *stat)
+int	ft_malloc_count(char *stock)
 {
-	char	*buf;
-	int		bit;
+	int	i;
 
-	bit = 1;
-	buf = malloc((size_t)BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
-	while (!ft_strchr(stat, '\n') && bit != 0)
-	{
-		bit = read(fd, buf, BUFFER_SIZE);
-		if (bit == -1)
-		{
-			free(buf);
-			free(stat);
-			return (NULL);
-		}
-		buf[bit] = '\0';
-		stat = ft_strjoin(stat, buf);
-	}
-	free(buf);
-	return (stat);
+	i = 0;
+	if (get_strchr(stock, '\n') == NULL)
+		return (ft_strlen(stock));
+	while (stock[i] != '\n' && stock[i] != '\0')
+		i++;
+	return (i + 1);
 }
 
-char	*start_line(char *stat)
+char	*ft_get_the_line(char *stock)
 {
-	char	*tp;
+	char	*line;
 	int		i;
+	int		len;
 
-	i = 0;
-	if (!stat[i])
-		return (NULL);
-	while (stat[i] && stat[i] != '\n')
-		i++;
-	tp = malloc(i + 2);
-	if (!tp)
+	line = NULL;
+	len = ft_malloc_count(stock);
+	line = malloc(sizeof(char) * (len + 1));
+	if (!line)
 		return (NULL);
 	i = 0;
-	while (stat[i] && stat[i] != '\n')
+	while (stock[i] && i < len)
 	{
-		tp[i] = stat[i];
+		line[i] = stock[i];
 		i++;
 	}
-	if (stat[i] == '\n')
-	{
-		tp[i] = stat[i];
-		i++;
-	}
-	tp[i] = '\0';
-	return (tp);
+	line[i] = '\0';
+	return (line);
 }
 
-char	*next_line(char *stat)
+void	ft_get_the_spare(char *buffer)
 {
-	int		i;
-	int		j;
-	char	*str;
+	int	i;
+	int	j;
 
 	i = 0;
+	while (buffer[i] != '\n')
+		i++;
+	i = i + 1;
 	j = 0;
-	while (stat[i] && stat[i] != '\n')
-		i++;
-	if (!stat[i])
+	while (i < BUFFER_SIZE)
 	{
-		free(stat);
+		buffer[j] = buffer[i];
+		i++;
+		j++;
+	}
+	buffer[j] = '\0';
+}
+
+char	*ft_line_results(int ret, char *stock, char *buffer)
+{
+	char		*line;
+
+	line = NULL;
+	if (ft_strlen(stock) == 0)
+	{
+		free(stock);
 		return (NULL);
 	}
-	str = malloc(ft_strlen(stat) - i + 1);
-	if (!str)
-		return (NULL);
-	i++;
-	while (stat[i])
-		str[j++] = stat[i++];
-	str[j] = '\0';
-	free(stat);
-	return (str);
+	line = ft_get_the_line(stock);
+	if (ret > 0)
+		ft_get_the_spare(buffer);
+	free(stock);
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*f_line;
-	static char	*statiq;
+	static char	buffer[BUFFER_SIZE + 1];
+	char		*stock;
+	int			ret;
 
-	if (fd < 0 || (size_t)BUFFER_SIZE <= 0)
+	stock = NULL;
+	if ((read(fd, buffer, 0) == -1) || BUFFER_SIZE <= 0)
 		return (NULL);
-	statiq = read_fun(fd, statiq);
-	if (!statiq)
-		return (NULL);
-	f_line = start_line(statiq);
-	statiq = next_line(statiq);
-	return (f_line);
+	ret = 1;
+	stock = get_strjoin(stock, buffer);
+	while (get_strchr(stock, '\n') == NULL && ret > 0)
+	{
+		ret = read(fd, buffer, BUFFER_SIZE);
+		if (ret < 0)
+		{
+			free(stock);
+			return (NULL);
+		}
+		buffer[ret] = '\0';
+		stock = get_strjoin(stock, buffer);
+	}
+	return (ft_line_results(ret, stock, buffer));
 }
