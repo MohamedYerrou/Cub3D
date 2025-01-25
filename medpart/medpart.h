@@ -85,7 +85,6 @@ typedef struct s_data
 	t_player	player;
 }	t_data;
 
-int		validate_move(t_data *data, double new_x, double new_y);
 int		map_is_valid(t_data *data, char **map_tab);
 int		handle_sides_of_map(t_mapdetail *map, char **map_tab);
 int		create_map(t_data *data, char **file, int i);
@@ -93,10 +92,7 @@ int		message(char *detail, char *str, int code);
 int		bring_data(t_data *data, char **map);
 size_t	find_biggest_len(t_mapdetail *map, int i);
 void	parse_file_data(char *path, t_data *data);
-void	init_player_direction(t_data *data);
 int		handle_file_error(char *arg, bool cub);
-void	listen_for_input(t_data *data);
-int		move_player(t_data *data);
 int		spaces(char c);
 void	init_mlx(t_data *data);
 char	*get_next_line(int fd);
