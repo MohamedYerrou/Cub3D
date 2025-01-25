@@ -7,7 +7,7 @@ static int	ignore_whitespaces_get_info(t_data *data, char **map, int i, int j)
 	if (ft_isdigit(map[i][j]))
 	{
 		if (create_map(data, map, i) == FAILURE)
-			return (message(data->mapinfo.path, "wrong map description", FAILURE));
+			return (message(data->mapdetail.path, "wrong map description", FAILURE));
 		return (SUCCESS);
 	}
 	return (CONTINUE);

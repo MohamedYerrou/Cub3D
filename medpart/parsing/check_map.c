@@ -17,9 +17,9 @@ static int	handle_components(t_data *data, char **map_tab)
 			|| data->map[i][j] == '\v' || data->map[i][j] == '\f')
 				j++;
 			if (!(ft_strchr("10NSEW", map_tab[i][j])))
-				return (message(data->mapinfo.path, "Invalid character in map", FAILURE));
+				return (message(data->mapdetail.path, "Invalid character in map", FAILURE));
 			if (ft_strchr("NSEW", map_tab[i][j]) && data->player.dir != '0')
-				return (message(data->mapinfo.path, "Map has more than one player", FAILURE));
+				return (message(data->mapdetail.path, "Map has more than one player", FAILURE));
 			if (ft_strchr("NSEW", map_tab[i][j]) && data->player.dir == '0')
 				data->player.dir = map_tab[i][j];
 			j++;
@@ -52,7 +52,7 @@ static int	player_position(t_data *data, char **map_tab)
 	int	j;
 
 	if (data->player.dir == '0')
-		return (message(data->mapinfo.path, "(expected N, S, E or W)", FAILURE));
+		return (message(data->mapdetail.path, "(expected N, S, E or W)", FAILURE));
 	i = 0;
 	while (map_tab[i])
 	{
@@ -70,11 +70,11 @@ static int	player_position(t_data *data, char **map_tab)
 		i++;
 	}
 	if (is_valid_position(data, map_tab) == FAILURE)
-		return (message(data->mapinfo.path, "Invalid player position", FAILURE));
+		return (message(data->mapdetail.path, "Invalid player position", FAILURE));
 	return (SUCCESS);
 }
 
-static int	is_end_of_map(t_mapinfo *map)
+static int	is_end_of_map(t_mapdetail *map)
 {
 	int	i;
 	int	j;
@@ -98,17 +98,17 @@ static int	is_end_of_map(t_mapinfo *map)
 
 int	map_is_valid(t_data *data, char **map_tab)
 {
-	if (!data->mapinfo.file)
-		return (message(data->mapinfo.path, "Missing map", FAILURE));
-	if (handle_sides_of_map(&data->mapinfo, map_tab) == FAILURE)
-		return (message(data->mapinfo.path, "Map is not surrounded by walls", FAILURE));
-	if (data->mapinfo.height < 3)
-		return (message(data->mapinfo.path, "Map is not at least 3 lines high", FAILURE));
+	if (!map_tab)
+		return (message(data->mapdetail.path, "Missing map", FAILURE));
+	if (handle_sides_of_map(&data->mapdetail, map_tab) == FAILURE)
+		return (message(data->mapdetail.path, "Map is not surrounded by walls", FAILURE));
+	if (data->mapdetail.height < 3)
+		return (message(data->mapdetail.path, "Map is not at least 3 lines high", FAILURE));
 	if (handle_components(data, map_tab) == FAILURE)
 		return (FAILURE);
 	if (player_position(data, map_tab) == FAILURE)
 		return (FAILURE);
-	if (is_end_of_map(&data->mapinfo) == FAILURE)
-		return (message(data->mapinfo.path, "Map is not the last element in file", FAILURE));
+	if (is_end_of_map(&data->mapdetail) == FAILURE)
+		return (message(data->mapdetail.path, "Map is not the last element in file", FAILURE));
 	return (SUCCESS);
 }

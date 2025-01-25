@@ -46,30 +46,7 @@
 # define EAST			2
 # define WEST			3
 
-typedef struct s_texinfo
-{
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
-	int				size;
-	int				*floor;
-	int				*ceiling;
-	unsigned long	hex_floor;
-	unsigned long	hex_ceiling;
-
-}	t_texinfo;
-
-typedef struct s_img
-{
-	void	*img;
-	int		*addr;
-	int		pixel_bits;
-	int		size_line;
-	int		endian;
-}	t_img;
-
-typedef struct s_mapinfo
+typedef struct s_mapdetail
 {
 	int			fd;
 	int			line_count;
@@ -78,7 +55,7 @@ typedef struct s_mapinfo
 	int			height;
 	int			width;
 	char		**file;
-} t_mapinfo;
+} t_mapdetail;
 
 typedef struct s_player
 {
@@ -104,18 +81,17 @@ typedef struct s_data
 	int			win_width;
 	int			**textures;
 	int			**texture_pixels;
-	t_mapinfo	mapinfo;
-	t_texinfo	texinfo;
+	t_mapdetail	mapdetail;
 	t_player	player;
 }	t_data;
 
 int		validate_move(t_data *data, double new_x, double new_y);
 int		map_is_valid(t_data *data, char **map_tab);
-int		handle_sides_of_map(t_mapinfo *map, char **map_tab);
+int		handle_sides_of_map(t_mapdetail *map, char **map_tab);
 int		create_map(t_data *data, char **file, int i);
 int		message(char *detail, char *str, int code);
 int		bring_data(t_data *data, char **map);
-size_t	find_biggest_len(t_mapinfo *map, int i);
+size_t	find_biggest_len(t_mapdetail *map, int i);
 void	parse_file_data(char *path, t_data *data);
 void	init_player_direction(t_data *data);
 int		handle_file_error(char *arg, bool cub);

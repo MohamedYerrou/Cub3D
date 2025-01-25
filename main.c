@@ -10,9 +10,10 @@ int main(int argc, char **argv)
 	if (handle_file_error(argv[1], true) == FAILURE)
 		return (FAILURE);
 	parse_file_data(argv[1], &data);
-	if (bring_data(&data, data.mapinfo.file) == FAILURE)
+	// printf("map_tab[0] ==> %s\n", data.mapdetail.file[0]);
+	if (bring_data(&data, data.mapdetail.file) == FAILURE)
 		return (FAILURE);
-	if (map_is_valid(&data, data.mapinfo.file) == FAILURE)
+	if (map_is_valid(&data, data.mapdetail.file) == FAILURE)
 		return (FAILURE);
 	init_mlx(&data);
 	return (SUCCESS);
