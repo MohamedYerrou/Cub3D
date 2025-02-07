@@ -14,6 +14,37 @@ void    my_mlx_put_pixel(t_data *data, int x, int y, int color)
     *(unsigned int *)offset = color;
 }
 
+int ft_abs(int n)
+{
+    if (n < 0)
+        n *= -1;
+    return (n);
+}
+
+void    dda_line(t_data *data, float x1, float y1, float x2, float y2)
+{
+    float   dx;
+    float   dy;
+    float   L;
+    float   Xinc;
+    float   Yinc;
+
+    dx = ft_abs(x2 - x1);
+    dy = ft_abs(y2 - y1);
+    if (dx > dy)
+        L = dx;
+    else
+        L = dy;
+    Xinc = (x2 - x1) / L;
+    Yinc = (y2 - y1) / L;
+    for (int i = 0; i <= L; i++)
+    {
+        my_mlx_put_pixel(data, roundf(x1), roundf(y1), 0xFF0000);
+        x1 += Xinc;
+        y1 += Yinc;
+    }
+}
+
 void    render_map(t_data *data)
 {
     for (int y = 0; y < data->h_map; y++)
@@ -46,12 +77,20 @@ void    render_map(t_data *data)
 
 void    render_player(t_data *data)
 {
+    float   x, y;
+    float   end_x, end_y;
+
+    x = data->p->player_x;
+    y = data->p->player_y;
+    end_x = x + cos(data->p->angle) * 30;
+    end_y = y + sin(data->p->angle) * 30;
     if (data->p->player_x < 0 || data->p->player_x >= data->w_map * TILE_SIZE || data->p->player_y < 0 || data->p->player_y >= data->h_map * TILE_SIZE)
     {
         printf("Playr out of bounds! Player position: (%d, %d)\n", data->p->player_x, data->p->player_y);
         return;
     }
     my_mlx_put_pixel(data, data->p->player_x, data->p->player_y, 0xFF0000);
+    dda_line(data, x, y, end_x, end_y);
 }
 
 void    render(t_data *data)
@@ -90,43 +129,10 @@ void    move_player(t_data *data, float move_x, float move_y)
     }
 }
 
-int ft_abs(int n)
-{
-    if (n < 0)
-        n *= -1;
-    return (n);
-}
-
-void    dda_line(t_data *data, float x1, float y1, float x2, float y2)
-{
-    float   dx;
-    float   dy;
-    float   L;
-    float   Xinc;
-    float   Yinc;
-
-    dx = ft_abs(x2 - x1);
-    dy = ft_abs(y2 - y1);
-    if (dx > dy)
-        L = dx;
-    else
-        L = dy;
-    Xinc = (x2 - x1) / L;
-    Yinc = (y2 - y1) / L;
-    for (int i = 0; i <= L; i++)
-    {
-        my_mlx_put_pixel(data, roundf(x1), roundf(y1), 0xFF0000);
-        x1 += Xinc;
-        y1 += Yinc;
-    }
-}
-
 int key_hook(int keycode, t_data *data)
 {
     float  move_x = 0;
     float  move_y = 0;
-    float   x, y;
-    float   end_x, end_y;
     // printf("keycode is : %d\n", keycode);
     if (keycode == 65307)
     {
@@ -157,14 +163,9 @@ int key_hook(int keycode, t_data *data)
         rotate_player(data, 0);
     else if (keycode == 65363)
         rotate_player(data, 1);
-    x = data->p->player_x;
-    y = data->p->player_y;
-    end_x = x + cos(data->p->angle) * 30;
-    end_y = y + sin(data->p->angle) * 30;
     mlx_clear_window(data->mlx, data->mlx_win);
     move_player(data, move_x, move_y);
     render(data);
-    dda_line(data, x, y, end_x, end_y);
     return (0);
 }
 
@@ -186,6 +187,7 @@ int main()
     };
     data.map = map;
     data.p = calloc(1, sizeof(t_paleyr));
+    data.ray = calloc(1, sizeof(t_ray));
     data.p_x = 5;
     data.p_y = 5;
     data.w_map = 25;
@@ -193,6 +195,7 @@ int main()
     data.p->player_x = data.p_x * TILE_SIZE + TILE_SIZE / 2;
     data.p->player_y = data.p_y * TILE_SIZE + TILE_SIZE / 2;
     data.p->angle = PI;
+    data.ray->num_rays = data.w_map * TILE_SIZE;
     data.mlx = mlx_init();
     data.mlx_win = mlx_new_window(data.mlx, data.w_map * TILE_SIZE, data.h_map * TILE_SIZE, "CUB3D_WINDOW");
     

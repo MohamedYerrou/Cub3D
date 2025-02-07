@@ -13,7 +13,7 @@
 #define W_H 600
 #define FOV_ANGLE (60 * (PI / 180))
 #define PLAYER_SPEED 10
-#define ROTATION_SPEED (50 * (PI / 180))
+#define ROTATION_SPEED (10 * (PI / 180))
 
 typedef struct s_player
 {
@@ -24,6 +24,19 @@ typedef struct s_player
     int u_d;
     double  angle;
 }   t_paleyr;
+
+typedef struct s_ray
+{
+    float   ray_angle;
+    float   distance;
+    int     x;
+    int     y;
+    int     num_rays;
+    int     rayFacingUP;
+    int     rayFacingDown;
+    int     rayFacingRight;
+    int     rayFacingLeft;
+}   t_ray;
 
 typedef struct s_data
 {
@@ -40,6 +53,7 @@ typedef struct s_data
     int     w_map;
     int     h_map;
     t_paleyr    *p;
+    t_ray   *ray;
 }   t_data;
 
 #endif
