@@ -5,15 +5,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <limits.h>
 #include <mlx.h>
 
 #define PI 3.14
 #define TILE_SIZE 32
-#define W_W 800
-#define W_H 600
 #define FOV_ANGLE (60 * (PI / 180))
 #define PLAYER_SPEED 10
-#define ROTATION_SPEED (10 * (PI / 180))
+#define ROTATION_SPEED (15 * (PI / 180))
 
 typedef struct s_player
 {
@@ -22,7 +21,7 @@ typedef struct s_player
     int rotate;
     int l_r;
     int u_d;
-    double  angle;
+    float  angle;
 }   t_paleyr;
 
 typedef struct s_ray
@@ -31,7 +30,6 @@ typedef struct s_ray
     float   distance;
     int     x;
     int     y;
-    int     num_rays;
     int     rayFacingUP;
     int     rayFacingDown;
     int     rayFacingRight;
@@ -50,10 +48,28 @@ typedef struct s_data
     char    **map;
     int     p_x;
     int     p_y;
-    int     w_map;
-    int     h_map;
+    int     w_map; // width in index
+    int     h_map; // height in index
+    int     W_W; // width in pixels
+    int     H_W; // height in pixels
     t_paleyr    *p;
     t_ray   *ray;
 }   t_data;
+
+
+int main(int ac, char **av);
+void    dda_line(t_data *data, float x2, float y2, int color);
+void ray_facing(t_ray *ray, float angle);
+float   normalize_angle(float angle);
+void    cast_ray(t_data *data, float ray_angle);
+void    cast_all_rays(t_data *data);
+int close_window();
+void    rotate_player(t_data *data, int direction);
+void    move_player(t_data *data, float move_x, float move_y);
+int key_hook(int keycode, t_data *data);
+void    my_mlx_put_pixel(t_data *data, int x, int y, int color);
+void    render_map(t_data *data);
+void    render_player(t_data *data);
+int    render(void *param);
 
 #endif

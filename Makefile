@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBRARY = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
-SRC = cub3d.c
+SRC = cub3d.c dda_line.c hook.c render.c raycasting.c
 OBJ = ${SRC:.c=.o}
 
 all: $(NAME)
