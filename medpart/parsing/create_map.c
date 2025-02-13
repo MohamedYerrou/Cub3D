@@ -25,14 +25,14 @@ static int	fill_map_tab(t_mapdetail *mapdetail, char **map_tab, int index)
 	int		i;
 	int		j;
 
-	mapdetail->width = find_biggest_len(mapdetail, index);
+	mapdetail->width = max_len(mapdetail, index);
 	i = 0;
 	while (i < mapdetail->height)
 	{
 		j = 0;
 		map_tab[i] = malloc(sizeof(char) * (mapdetail->width + 1));
 		if (!map_tab[i])
-			return (message(NULL, "Could not allocate memory", FAILURE));
+			return (message(NULL, "Error in malloc", FAILURE));
 		while (mapdetail->file[index][j] && mapdetail->file[index][j] != '\n')
 		{
 			map_tab[i][j] = mapdetail->file[index][j];
@@ -50,32 +50,32 @@ static int	fill_map_tab(t_mapdetail *mapdetail, char **map_tab, int index)
 static int	get_map_info(t_data *data, char **file, int i)
 {
 	data->mapdetail.height = count_map_lines(data, file, i);
-	data->mapdetail.file = malloc(sizeof(char *) * (data->mapdetail.height + 1));
-	if (!data->mapdetail.file)
-		return (message(NULL, "Could not allocate memory", FAILURE));
-	if (fill_map_tab(&data->mapdetail, data->mapdetail.file, i) == FAILURE)
+	data->map = malloc(sizeof(char *) * (data->mapdetail.height + 1));
+	if (!data->map)
+		return (message(NULL, "Error in malloc", FAILURE));
+	if (fill_map_tab(&data->mapdetail, data->map, i) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-static void	change_space_into_wall(t_data *data)
+static void	spaces_are_walls(t_data *data)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (data->mapdetail.file[i])
+	while (data->map[i])
 	{
 		j = 0;
-		while (data->mapdetail.file[i][j] == ' ' || data->mapdetail.file[i][j] == '\t'
-		|| data->mapdetail.file[i][j] == '\r'
-		|| data->mapdetail.file[i][j] == '\v' || data->mapdetail.file[i][j] == '\f')
+		while (data->map[i][j] == ' ' || data->map[i][j] == '\t'
+		|| data->map[i][j] == '\r'
+		|| data->map[i][j] == '\v' || data->map[i][j] == '\f')
 			j++;
-		while (data->mapdetail.file[i][++j])
+		while (data->map[i][++j])
 		{
-			if (data->mapdetail.file[i][j] == ' '
-				&& j != data->mapdetail.file[i][ft_strlen(data->mapdetail.file[i]) - 1])
-				data->mapdetail.file[i][j] = '1';
+			if (data->map[i][j] == ' '
+				&& j != data->map[i][ft_strlen(data->map[i]) - 1])
+				data->map[i][j] = '1';
 		}
 		i++;
 	}
@@ -85,6 +85,6 @@ int	create_map(t_data *data, char **file, int i)
 {
 	if (get_map_info(data, file, i) == FAILURE)
 		return (FAILURE);
-	change_space_into_wall(data);
+	spaces_are_walls(data);
 	return (SUCCESS);
 }

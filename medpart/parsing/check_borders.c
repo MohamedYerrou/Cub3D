@@ -1,6 +1,7 @@
 #include "../medpart.h"
 
-static int	check_bottom_top(char **map_tab, int i, int j)
+
+static int	check_top_or_bottom(char **map_tab, int i, int j)
 {
 	if (!map_tab || !map_tab[i] || !map_tab[i][j])
 		return (FAILURE);
@@ -17,13 +18,12 @@ static int	check_bottom_top(char **map_tab, int i, int j)
 	return (SUCCESS);
 }
 
-int	handle_sides_of_map(t_mapdetail *map, char **map_tab)
+int	check_map_sides(t_mapdetail *map, char **map_tab)
 {
 	int	i;
 	int	j;
 
-	printf("map_tab[0] ==>> %s\n", map_tab[0]);
-	if (check_bottom_top(map_tab, 0, 0) == FAILURE)
+	if (check_top_or_bottom(map_tab, 0, 0) == FAILURE)
 		return (FAILURE);
 	i = 1;
 	while (i < (map->height - 1))
@@ -33,7 +33,7 @@ int	handle_sides_of_map(t_mapdetail *map, char **map_tab)
 			return (FAILURE);
 		i++;
 	}
-	if (check_bottom_top(map_tab, i, 0) == FAILURE)
+	if (check_top_or_bottom(map_tab, i, 0) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

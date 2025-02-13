@@ -13,14 +13,20 @@ SRCS 			= main.c utils/Get_next_line/get_next_line.c \
 				medpart/parsing/data_parse.c \
 				medpart/parsing/create_map.c \
 				medpart/parsing/check_borders.c \
+				medpart/parsing/check_texture.c \
+				medpart/parsing/fill_color_texture.c \
 				medpart/parsing/check_map.c \
 				medpart/init/init_mlx.c \
+				medpart/init/init_textures.c \
+				medpart/player/player_direction.c \
+				medpart/player/input_handler.c \
+				medpart/render/render.c
 
 OBJS			= ${SRCS:.c=.o}
 
 CC				= cc
 
-CFLAGS			= -Wall -Wextra -Werror -I utils/Libft #-fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -I utils/Libft -g3 #-fsanitize=address
 
 RM				= rm -f
 
@@ -38,9 +44,8 @@ clean:
 
 fclean:			clean
 				$(RM) $(NAME)
-				make -C $(LIBPATH) fclean
 
 re:				fclean $(NAME)
-		make -C $(LIBPATH) re
+				make -C $(LIBPATH)
 
 .PHONY:			all clean fclean re

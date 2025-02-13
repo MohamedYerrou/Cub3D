@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int	ft_malloc_count(char *stock)
+int	ft_count(char *stock)
 {
 	int	i;
 
@@ -24,14 +24,14 @@ int	ft_malloc_count(char *stock)
 	return (i + 1);
 }
 
-char	*ft_get_the_line(char *stock)
+char	*ft_get_line(char *stock)
 {
 	char	*line;
 	int		i;
 	int		len;
 
 	line = NULL;
-	len = ft_malloc_count(stock);
+	len = ft_count(stock);
 	line = malloc(sizeof(char) * (len + 1));
 	if (!line)
 		return (NULL);
@@ -45,7 +45,7 @@ char	*ft_get_the_line(char *stock)
 	return (line);
 }
 
-void	ft_get_the_spare(char *buffer)
+void	get_rest(char *buffer)
 {
 	int	i;
 	int	j;
@@ -64,7 +64,7 @@ void	ft_get_the_spare(char *buffer)
 	buffer[j] = '\0';
 }
 
-char	*ft_line_results(int ret, char *stock, char *buffer)
+char	*ft_result(int ret, char *stock, char *buffer)
 {
 	char		*line;
 
@@ -74,9 +74,9 @@ char	*ft_line_results(int ret, char *stock, char *buffer)
 		free(stock);
 		return (NULL);
 	}
-	line = ft_get_the_line(stock);
+	line = ft_get_line(stock);
 	if (ret > 0)
-		ft_get_the_spare(buffer);
+		get_rest(buffer);
 	free(stock);
 	return (line);
 }
@@ -103,5 +103,5 @@ char	*get_next_line(int fd)
 		buffer[ret] = '\0';
 		stock = get_strjoin(stock, buffer);
 	}
-	return (ft_line_results(ret, stock, buffer));
+	return (ft_result(ret, stock, buffer));
 }

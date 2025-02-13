@@ -9,7 +9,7 @@ int	spaces(char c)
 		return (SUCCESS);
 }
 
-size_t	find_biggest_len(t_mapdetail *map, int i)
+size_t	max_len(t_mapdetail *map, int i)
 {
 	size_t	biggest_len;
 
