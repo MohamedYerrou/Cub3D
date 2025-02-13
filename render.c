@@ -11,28 +11,23 @@ void    my_mlx_put_pixel(t_data *data, int x, int y, int color)
 
 void    render_map(t_data *data)
 {
+    int color;
+
+    color = 0;
+    // mlx_clear_
     for (int y = 0; y < data->h_map; y++)
     {
         for (int x = 0; x < data->w_map; x++)
         {
             if (data->map[y][x] == '1')
-            {
-                for (int j = 0; j < TILE_SIZE; j++)
-                {
-                    for (int i = 0; i < TILE_SIZE; i++)
-                    {
-                        my_mlx_put_pixel(data, x * TILE_SIZE + i, y * TILE_SIZE + j, 0x000000);
-                    }
-                }
-            }
+                color = 0x000000;
             else if (data->map[y][x] == '0')
+                color = 0xffffff;
+            for (int h = 0; h < TILE_SIZE; h++)
             {
-                for (int j = 0; j < TILE_SIZE; j++)
+                for (int w = 0; w < TILE_SIZE; w++)
                 {
-                    for (int i = 0; i < TILE_SIZE; i++)
-                    {
-                        my_mlx_put_pixel(data, x * TILE_SIZE + i, y * TILE_SIZE + j, 0xFFFFFF);
-                    }
+                    my_mlx_put_pixel(data, (x * TILE_SIZE) + w, (y * TILE_SIZE) + h, color);
                 }
             }
         }
@@ -62,9 +57,9 @@ int    render(void *param)
     t_data *data;
     data = (t_data *)param;
     mlx_clear_window(data->mlx, data->mlx_win);
-    render_map(data);
+    // render_map(data);
     cast_all_rays(data);
-    render_player(data);
+    // render_player(data);
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
     return (0);
 }

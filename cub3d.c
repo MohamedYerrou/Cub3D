@@ -9,10 +9,10 @@ int main(int ac, char **av)
     char *map[] = {
         "1111111111111111111111111",
         "1000010000000000011000001",
-        "1100100000000000000010101",
+        "1100100010101010010010101",
         "1000000000000000000001111",
         "1000000000000000000000001",
-        "1000000000000011111000001",
+        "100000000000001111100001",
         "1000000000000000000000001",
         "1000000000000000000000001",
         "1111111111111111111111111",
@@ -37,9 +37,9 @@ int main(int ac, char **av)
     
     data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_length, &data.endian);
     // render(&data);
-    mlx_loop_hook(data.mlx, render, &data);
     mlx_key_hook(data.mlx_win, key_hook, &data);
     mlx_hook(data.mlx_win, 17, 0, close_window, &data);
+    mlx_loop_hook(data.mlx, render, &data);
     mlx_loop(data.mlx);
     return (0);
 }

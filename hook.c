@@ -39,6 +39,8 @@ int key_hook(int keycode, t_data *data)
 {
     float  move_x = 0;
     float  move_y = 0;
+    // mlx_clear_window(data->mlx, data->mlx_win);
+
     // printf("keycode is : %d\n", keycode);
     if (keycode == 65307)
     {
@@ -70,6 +72,7 @@ int key_hook(int keycode, t_data *data)
     else if (keycode == 65363)
         rotate_player(data, 1);
     move_player(data, move_x, move_y);
+    // mlx_clear_window(data->mlx, data->mlx_win);
     render(data);
     return (0);
 }

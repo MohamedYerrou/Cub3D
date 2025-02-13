@@ -11,7 +11,7 @@
 #define PI 3.14
 #define TILE_SIZE 32
 #define FOV_ANGLE (60 * (PI / 180))
-#define PLAYER_SPEED 10
+#define PLAYER_SPEED 5
 #define ROTATION_SPEED (15 * (PI / 180))
 
 typedef struct s_player
@@ -28,6 +28,11 @@ typedef struct s_ray
 {
     float   ray_angle;
     float   distance;
+    float   h_x;
+    float   h_y;
+    float   v_x;
+    float   v_y;
+    int     flag;
     int     x;
     int     y;
     int     rayFacingUP;
@@ -71,5 +76,6 @@ void    my_mlx_put_pixel(t_data *data, int x, int y, int color);
 void    render_map(t_data *data);
 void    render_player(t_data *data);
 int    render(void *param);
+void    render3dwall(t_data *data, int ray);
 
 #endif
