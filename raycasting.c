@@ -218,8 +218,8 @@ void    cast_all_rays(t_data *data)
         // }
         // else
         //     data->ray->distance = dist_vert;
-        render3dwall(data, ray);
-        // dda_line(data, data->ray->x, data->ray->y, 0xFF0000);
+        // render3dwall(data, ray);
+        dda_line(data, data->ray->x, data->ray->y, 0xFF0000);
         data->ray->ray_angle += FOV_ANGLE / data->W_W;
     }
     // exit(1);

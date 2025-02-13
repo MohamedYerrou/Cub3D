@@ -35,44 +35,76 @@ void    move_player(t_data *data, float move_x, float move_y)
     }
 }
 
+void    movement(t_data *data)
+{
+    float   move_x  = 0;
+    float   move_y  = 0;
+
+    if (data->p->l_r == 1)
+    {
+        move_x = -cos(data->p->angle + PI / 2) * PLAYER_SPEED;
+        move_y = -sin(data->p->angle + PI / 2) * PLAYER_SPEED;
+    }
+    else if (data->p->l_r == -1)
+    {
+        move_x = cos(data->p->angle + PI / 2) * PLAYER_SPEED;
+        move_y = sin(data->p->angle + PI / 2) * PLAYER_SPEED;
+    }
+    else if (data->p->u_d == 1)
+    {
+        move_x = cos(data->p->angle) * PLAYER_SPEED;
+        move_y = sin(data->p->angle) * PLAYER_SPEED;
+    }
+    else if (data->p->u_d == -1)
+    {
+        move_x = -cos(data->p->angle) * PLAYER_SPEED;
+        move_y = -sin(data->p->angle) * PLAYER_SPEED;
+    }
+    else if (data->p->rotate == 1)
+        rotate_player(data, 1);
+    else if (data->p->rotate == -1)
+        rotate_player(data, -1);
+    move_player(data, move_x, move_y);
+}
+
 int key_hook(int keycode, t_data *data)
 {
-    float  move_x = 0;
-    float  move_y = 0;
-    // mlx_clear_window(data->mlx, data->mlx_win);
-
     // printf("keycode is : %d\n", keycode);
     if (keycode == 65307)
     {
         printf("ESC exiting\n");
         exit(0);
     }
-    if (keycode == 97) // a
-    {
-        move_x = -cos(data->p->angle + PI / 2) * PLAYER_SPEED; // -1
-        move_y = -sin(data->p->angle + PI / 2) * PLAYER_SPEED; // 0
-    }
-    else if (keycode == 100) // d
-    {
-        move_x = cos(data->p->angle + PI / 2) * PLAYER_SPEED; // 1
-        move_y = sin(data->p->angle + PI / 2) * PLAYER_SPEED; // 0
-    }
-    else if (keycode == 119) // w
-    {
-        move_x = cos(data->p->angle) * PLAYER_SPEED; // 0
-        move_y = sin(data->p->angle) * PLAYER_SPEED; // 1
-    }
-    else if (keycode == 115) // s
-    {
-        move_x = -cos(data->p->angle) * PLAYER_SPEED; // 0
-        move_y = -sin(data->p->angle) * PLAYER_SPEED; // 1
-    }
+    if (keycode == 97)
+        data->p->l_r = 1;
+    else if (keycode == 100)
+        data->p->l_r = -1;
+    else if (keycode == 119) 
+        data->p->u_d = 1;
+    else if (keycode == 115)
+        data->p->u_d = -1;
     else if (keycode == 65361)
-        rotate_player(data, 0);
+        data->p->rotate = -1;
     else if (keycode == 65363)
-        rotate_player(data, 1);
-    move_player(data, move_x, move_y);
-    // mlx_clear_window(data->mlx, data->mlx_win);
+        data->p->rotate = 1;
+    movement(data);
     render(data);
+    return (0);
+}
+
+int key_release(int key, t_data *data)
+{
+    if (key == 97)
+        data->p->l_r = 0;
+    else if (key == 100)
+        data->p->l_r = 0;
+    else if (key == 119)
+        data->p->u_d = 0;
+    else if (key == 115)
+        data->p->u_d = 0;
+    else if (key == 65361)
+        data->p->rotate = 0;
+    else if (key == 65363)
+        data->p->rotate = 0;
     return (0);
 }

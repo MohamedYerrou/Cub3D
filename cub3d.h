@@ -77,5 +77,7 @@ void    render_map(t_data *data);
 void    render_player(t_data *data);
 int    render(void *param);
 void    render3dwall(t_data *data, int ray);
+void    movement(t_data *data);
+int key_release(int key, t_data *data);
 
 #endif

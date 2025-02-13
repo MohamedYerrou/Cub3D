@@ -57,9 +57,9 @@ int    render(void *param)
     t_data *data;
     data = (t_data *)param;
     mlx_clear_window(data->mlx, data->mlx_win);
-    // render_map(data);
+    render_map(data);
     cast_all_rays(data);
-    // render_player(data);
+    render_player(data);
     mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
     return (0);
 }
