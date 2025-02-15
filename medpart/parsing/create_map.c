@@ -1,4 +1,4 @@
-#include "../medpart.h"
+#include "../../cub3d.h"
 
 static int	count_map_lines(t_data *data, char **file, int i)
 {
@@ -20,26 +20,28 @@ static int	count_map_lines(t_data *data, char **file, int i)
 	return (i - index_value);
 }
 
-static int	fill_map_tab(t_mapdetail *mapdetail, char **map_tab, int index)
+static int	fill_map_tab(t_data *data, char **map_tab, int index)
 {
 	int		i;
 	int		j;
 
-	mapdetail->width = max_len(mapdetail, index);
+	data->w_map = max_len(data->mapdetail, index);
 	i = 0;
-	while (i < mapdetail->height)
+	while (i < data->h_map)
 	{
 		j = 0;
-		map_tab[i] = malloc(sizeof(char) * (mapdetail->width + 1));
+		map_tab[i] = malloc(sizeof(char) * (data->w_map + 1));
 		if (!map_tab[i])
 			return (message(NULL, "Error in malloc", FAILURE));
-		while (mapdetail->file[index][j] && mapdetail->file[index][j] != '\n')
+		while (data->mapdetail.file[index][j] && data->mapdetail.file[index][j] != '\n')
 		{
-			map_tab[i][j] = mapdetail->file[index][j];
+			map_tab[i][j] = data->mapdetail.file[index][j];
+			printf("%c",  map_tab[i][j]);
 			j++;
 		}
-		while (j < mapdetail->width)
+		while (j < data->w_map)
 			map_tab[i][j++] = '\0';
+		printf("\n");
 		i++;
 		index++;
 	}
@@ -49,11 +51,11 @@ static int	fill_map_tab(t_mapdetail *mapdetail, char **map_tab, int index)
 
 static int	get_map_info(t_data *data, char **file, int i)
 {
-	data->mapdetail.height = count_map_lines(data, file, i);
-	data->map = malloc(sizeof(char *) * (data->mapdetail.height + 1));
+	data->h_map = count_map_lines(data, file, i);
+	data->map = malloc(sizeof(char *) * (data->h_map + 1));
 	if (!data->map)
 		return (message(NULL, "Error in malloc", FAILURE));
-	if (fill_map_tab(&data->mapdetail, data->map, i) == FAILURE)
+	if (fill_map_tab(data, data->map, i) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

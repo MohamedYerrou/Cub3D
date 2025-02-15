@@ -1,4 +1,4 @@
-#include "../medpart.h"
+#include "../../cub3d.h"
 
 static bool	file_cub(char *arg)
 {

@@ -1,4 +1,4 @@
-#include "../medpart.h"
+#include "../../cub3d.h"
 
 int	message_val(int detail, char *str, int code)
 {

@@ -1,4 +1,4 @@
-#include "../medpart.h"
+#include "../../cub3d.h"
 
 void	free_tab(void **tab)
 {

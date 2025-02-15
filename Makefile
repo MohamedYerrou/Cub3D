@@ -1,4 +1,4 @@
-NAME 			= cub3D
+NAME 			= Cub3D
 
 LIBPATH		= utils/Libft
 
@@ -20,7 +20,8 @@ SRCS 			= main.c utils/Get_next_line/get_next_line.c \
 				medpart/init/init_textures.c \
 				medpart/player/player_direction.c \
 				medpart/player/input_handler.c \
-				medpart/render/render.c
+				medpart/render/render.c \
+				cub3d.c dda_line.c hook.c render.c raycasting.c
 
 OBJS			= ${SRCS:.c=.o}
 

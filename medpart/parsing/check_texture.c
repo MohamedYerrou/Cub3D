@@ -1,4 +1,4 @@
-#include "../medpart.h"
+#include "../../cub3d.h"
 
 static int	check_valid_rgb(int *rgb)
 {

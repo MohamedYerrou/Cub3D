@@ -1,4 +1,4 @@
-#include "../medpart.h"
+#include "../../cub3d.h"
 
 static char	*get_texture_path(char *line, int j)
 {
@@ -65,7 +65,7 @@ static int	ignore_whitespaces_get_info(t_data *data, char **map, int i, int j)
 			return (BREAK);
 		}
 	}
-	else if (ft_isdigit(map[i][j]))
+	if (ft_isdigit(map[i][j]))
 	{
 		if (create_map(data, map, i) == FAILURE)
 			return (message(data->mapdetail.path, "map description not valid", FAILURE));
