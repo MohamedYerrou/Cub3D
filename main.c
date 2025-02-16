@@ -1,39 +1,5 @@
 #include "cub3d.h"
 
-// void	init_texture_pixels(t_data *data)
-// {
-// 	int	i;
-
-// 	if (data->texture_pixels)
-// 		free_tab((void **)data->texture_pixels);
-// 	data->texture_pixels = ft_calloc(data->h_map + 1,
-// 			sizeof * data->texture_pixels);
-// 	if (!data->texture_pixels)
-// 	{
-// 		message(NULL, "Error in malloc", 1);
-// 		exit (1);
-// 	}
-// 	i = 0;
-// 	while (i < data->h_map)
-// 	{
-// 		data->texture_pixels[i] = ft_calloc(data->w_map + 1,
-// 				sizeof * data->texture_pixels);
-// 		if (!data->texture_pixels[i])
-// 		{
-// 			message(NULL, "Error in malloc", 1);
-// 			exit (1);
-// 		}
-// 		i++;
-// 	}
-// }
-
-// int	render(t_data *data)
-// {
-// 	init_texture_pixels(data);
-// 	render_frame(data);
-// 	return (0);
-// }
-
 static int	parsing(t_data *data, char **argv)
 {
 	if (handle_file_error(argv[1], true) == FAILURE)
@@ -49,6 +15,82 @@ static int	parsing(t_data *data, char **argv)
 	return (SUCCESS);
 }
 
+t_img	*create_new_image(t_data *data, char *path)
+{
+	t_img	*image;
+
+	image = malloc(sizeof(t_img));
+	if (!image)
+	{
+		printf("Image allocation failed\n");
+		return (NULL);
+	}
+	image->img = mlx_xpm_file_to_image(data->mlx, path, &image->w_texture, &image->h_texture);
+	if (!image->img)
+	{
+		free(image);
+		printf("Error in creation new image\n");
+		return (NULL);
+	}
+	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->line_length, &image->endian);
+	if (!image->addr)
+	{
+		free(image);
+		mlx_destroy_image(data->mlx, image->img);
+		printf("Error getting image data address\n");
+		return (NULL);
+	}
+	return (image);
+}
+
+void	init_texture(t_data *data)
+{
+	data->NO = create_new_image(data, data->texdetail.north);
+	data->EA = create_new_image(data, data->texdetail.east);
+	data->SO = create_new_image(data, data->texdetail.south);
+	data->WE = create_new_image(data, data->texdetail.west);
+}
+
+float	player_facing(t_data *data)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (j < data->h_map)
+	{
+		i = 0;
+		while (i < data->w_map)
+		{
+			if (data->map[j][i] == 'N')
+				return (1.5 * PI);
+			else if (data->map[j][i] == 'S')
+				return (0.5 * PI);
+			else if (data->map[j][i] == 'E')
+				return (0);
+			else if (data->map[j][i] == 'W')
+				return (PI);
+			i++;
+		}
+		j++;
+	}
+	return (0);
+}
+
+void	ft_init(t_data *data)
+{
+	data->p = calloc(1, sizeof(t_paleyr));
+    data->ray = calloc(1, sizeof(t_ray));
+	data->img = calloc(1, sizeof(t_img));
+    data->p_x = 5;
+    data->p_y = 5;
+    data->W_W = data->w_map * TILE_SIZE;
+    data->H_W = data->h_map * TILE_SIZE;
+    data->p->player_x = data->p_x * TILE_SIZE + TILE_SIZE / 2;
+    data->p->player_y = data->p_y * TILE_SIZE + TILE_SIZE / 2;
+    data->p->angle = player_facing(data);
+}
+
 int main(int argc, char **argv)
 {
 	t_data	data;
@@ -58,30 +100,15 @@ int main(int argc, char **argv)
 	data = (t_data){0};
 	if (parsing(&data, argv) != SUCCESS)
 		return (FAILURE);
-	data.p = calloc(1, sizeof(t_paleyr));
-    data.ray = calloc(1, sizeof(t_ray));
-    data.p_x = 5;
-    data.p_y = 5;
-    // data.w_map = 25;
-    // data.h_map = 9;
-    data.W_W = data.w_map * TILE_SIZE;
-    data.H_W = data.h_map * TILE_SIZE;
-    data.p->player_x = data.p_x * TILE_SIZE + TILE_SIZE / 2;
-    data.p->player_y = data.p_y * TILE_SIZE + TILE_SIZE / 2;
-    data.p->angle = 0;
-	// init_mlx(&data);
-	// init_textures(&data);
-	// input_handler(&data);
-	// mlx_loop_hook(data.mlx, render, &data);
-	// mlx_loop(data.mlx);
 
-    data.mlx = mlx_init();
+    ft_init(&data);
+	data.mlx = mlx_init();
     data.mlx_win = mlx_new_window(data.mlx, data.W_W, data.H_W, "CUB3D_WINDOW");
 
-    data.img = mlx_new_image(data.mlx, data.W_W, data.H_W);
+    data.img->img = mlx_new_image(data.mlx, data.W_W, data.H_W);
 
-    data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_length, &data.endian);
-    render(&data);
+    data.img->addr = mlx_get_data_addr(data.img->img, &data.img->bpp, &data.img->line_length, &data.img->endian);
+	init_texture(&data);
     mlx_loop_hook(data.mlx, render, &data);
     mlx_hook(data.mlx_win, 02, 1L<<0,  key_hook, &data);
     mlx_hook(data.mlx_win, 03, 1L<<1,  key_release, &data);

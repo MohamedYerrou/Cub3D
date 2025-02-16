@@ -12,7 +12,7 @@
 #include <errno.h>
 
 #define PI 3.14
-#define TILE_SIZE 32
+#define TILE_SIZE 64
 #define FOV_ANGLE (60 * (PI / 180))
 #define PLAYER_SPEED 5
 #define ROTATION_SPEED (15 * (PI / 180))
@@ -65,6 +65,17 @@ typedef struct s_mapdetail
 
 
 //bilal part
+typedef struct s_img
+{
+    void    *img;
+    char    *addr;
+    int     bpp;
+    int     line_length;
+    int     endian;
+    int     w_texture;
+    int     h_texture;
+}   t_img;
+
 typedef struct s_player
 {
     int player_x;
@@ -79,28 +90,15 @@ typedef struct s_ray
 {
     float   ray_angle;
     float   distance;
-    float   h_x;
-    float   h_y;
-    float   v_x;
-    float   v_y;
     int     flag;
     int     x;
     int     y;
-    int     rayFacingUP;
-    int     rayFacingDown;
-    int     rayFacingRight;
-    int     rayFacingLeft;
 }   t_ray;
 
 typedef struct s_data
 {
     void    *mlx;
     void    *mlx_win;
-    void    *img;
-    char    *addr;
-    int     bpp;
-    int     line_length;
-    int     endian;
     char    **map;
     int     p_x;
     int     p_y;
@@ -108,6 +106,11 @@ typedef struct s_data
     int     h_map; // height in index
     int     W_W; // width in pixels
     int     H_W; // height in pixels
+    t_img   *EA;
+    t_img   *WE;
+    t_img   *NO;
+    t_img   *SO;
+    t_img   *img;
     t_paleyr    *p;
     t_ray   *ray;
 	t_texdetail	texdetail;

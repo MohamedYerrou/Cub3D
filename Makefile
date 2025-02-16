@@ -16,11 +16,6 @@ SRCS 			= main.c utils/Get_next_line/get_next_line.c \
 				medpart/parsing/check_texture.c \
 				medpart/parsing/fill_color_texture.c \
 				medpart/parsing/check_map.c \
-				medpart/init/init_mlx.c \
-				medpart/init/init_textures.c \
-				medpart/player/player_direction.c \
-				medpart/player/input_handler.c \
-				medpart/render/render.c \
 				cub3d.c dda_line.c hook.c render.c raycasting.c
 
 OBJS			= ${SRCS:.c=.o}

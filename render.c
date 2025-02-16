@@ -5,7 +5,7 @@ void    my_mlx_put_pixel(t_data *data, int x, int y, int color)
     char    *offset;
     if (x < 0 || y < 0 || x >= data->W_W || y >= data->H_W)
         return ;
-    offset = data->addr + (y * data->line_length + x * (data->bpp / 8));
+    offset = data->img->addr + (y * data->img->line_length + x * (data->img->bpp / 8));
     *(unsigned int *)offset = color;
 }
 
@@ -14,7 +14,6 @@ void    render_map(t_data *data)
     int color;
 
     color = 0;
-    // mlx_clear_
     for (int y = 0; y < data->h_map; y++)
     {
         for (int x = 0; x < data->w_map; x++)
@@ -57,9 +56,9 @@ int    render(void *param)
     t_data *data;
     data = (t_data *)param;
     mlx_clear_window(data->mlx, data->mlx_win);
-    render_map(data);
+    // render_map(data);
     cast_all_rays(data);
-    render_player(data);
-    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+    // render_player(data);
+    mlx_put_image_to_window(data->mlx, data->mlx_win, data->img->img, 0, 0);
     return (0);
 }
