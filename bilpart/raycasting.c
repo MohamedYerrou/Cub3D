@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
 float   normalize_angle(float angle)
 {
@@ -154,8 +154,9 @@ void    draw_wall(t_data *data, int *top, int *buttom, int ray)
         offset_x = (data->ray->y % TILE_SIZE);
     for (int y = *top; y < *buttom; y++)
     {
-        float   tex_pos = (y - *top) * t_height / wall_height;
-        offste_y = (int)tex_pos;
+		int	dis = y + (wall_height / 2) - (data->H_W / 2);
+        int   tex_pos = dis * t_height / wall_height;
+        offste_y = tex_pos;
         int color = get_color(texture, offset_x, offste_y);
         my_mlx_put_pixel(data, ray, y, color);
     }
@@ -194,11 +195,11 @@ void    render3dwall(t_data *data, int ray)
     project_wall_height = (TILE_SIZE * projct_distance) / distance;
     wall_height = (int)project_wall_height;
     top_pixel = (data->H_W / 2) - (wall_height / 2);
-    if (top_pixel < 0)
-        top_pixel = 0;
+    // if (top_pixel < 0)
+    //     top_pixel = 0;
     buttom_pixel = (data->H_W / 2) + (wall_height / 2);
-    if (buttom_pixel > data->H_W)
-        buttom_pixel = data->H_W;
+    // if (buttom_pixel > data->H_W)
+    //     buttom_pixel = data->H_W;
     draw_f_c(data, &top_pixel, &buttom_pixel, ray);
     draw_wall(data, &top_pixel, &buttom_pixel, ray);
 }

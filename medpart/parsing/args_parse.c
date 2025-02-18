@@ -39,19 +39,19 @@ static bool	is_dir(char *arg)
 	return (ret);
 }
 
-int	handle_file_error(char *arg, bool cub)
+int	handle_file_error(t_data *data, char *arg, bool cub)
 {
 	int	fd;
 
 	if (is_dir(arg))
-		return (message(arg, "Is a directory", FAILURE));
+		message(arg, "Is a directory",1), exit_no_leaks(data, 1);
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
-		return (message(arg, strerror(errno), FAILURE));
+		message(arg, strerror(errno), 1), exit_no_leaks(data, 1);
 	close(fd);
 	if (cub && !file_cub(arg))
-		return (message(arg, "Not a .cub file", FAILURE));
+		message(arg, "Not a .cub file", 1), exit_no_leaks(data, 1);
 	if (!cub && !file_xpm(arg))
-		return (message(arg, "Not an .xpm file", FAILURE));
+		message(arg, "Not an .xpm file", 1), exit_no_leaks(data, 1);
 	return (SUCCESS);
 }

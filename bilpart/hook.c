@@ -1,9 +1,10 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
-int close_window()
+int close_window(t_data *data)
 {
-    printf("closed window\n");
-    exit(0);
+    printf(BGREEN "closed window\n");
+    exit_no_leaks(data, 0);
+    return (0);
 }
 
 void    rotate_player(t_data *data, int direction)
@@ -72,8 +73,8 @@ int key_hook(int keycode, t_data *data)
     // printf("keycode is : %d\n", keycode);
     if (keycode == 65307)
     {
-        printf("ESC exiting\n");
-        exit(0);
+        printf(BGREEN "ESC exiting\n");
+        exit_no_leaks(data, 0);
     }
     if (keycode == 97)
         data->p->l_r = 1;

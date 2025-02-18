@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void    dda_line(t_data *data, float x2, float y2, int color)
 {

@@ -1,10 +1,10 @@
 F 119,120,100
 C 90,100,200
 
-NO textures/cobblestone.xpm
-SO textures/cobblestone_01.xpm
-WE textures/cobblestone.xpm
-EA textures/cobblestone_02.xpm
+NO medpart/textures/cobblestone.xpm
+SO medpart/textures/cobblestone_01.xpm
+WE medpart/textures/cobblestone.xpm
+EA medpart/textures/cobblestone_02.xpm
 
 
 1111111111111111111111111

@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void    my_mlx_put_pixel(t_data *data, int x, int y, int color)
 {
@@ -44,7 +44,7 @@ void    render_player(t_data *data)
     end_y = y + sin(data->p->angle) * 30;
     if (x < 0 || x >= data->W_W || y < 0 || y >= data->H_W)
     {
-        printf("Playr out of bounds! Player position: (%d, %d)\n", x, y);
+        printf(BRED "Player out of bounds! Player position: (%d, %d)\n", x, y);
         return;
     }
     my_mlx_put_pixel(data, data->p->player_x, data->p->player_y, 0x0000FF);

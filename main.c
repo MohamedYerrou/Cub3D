@@ -2,7 +2,7 @@
 
 static int	parsing(t_data *data, char **argv)
 {
-	if (handle_file_error(argv[1], true) == FAILURE)
+	if (handle_file_error(data, argv[1], true) == FAILURE)
 		return (FAILURE);
 	parse_file_data(argv[1], data);
 	if (bring_data(data, data->mapdetail.file) == FAILURE)
@@ -11,7 +11,6 @@ static int	parsing(t_data *data, char **argv)
 		return (FAILURE);
 	if (texture_is_valid(data, &data->texdetail) == FAILURE)
 		return (FAILURE);
-	// init_player(data);
 	return (SUCCESS);
 }
 
@@ -22,14 +21,14 @@ t_img	*create_new_image(t_data *data, char *path)
 	image = malloc(sizeof(t_img));
 	if (!image)
 	{
-		printf("Image allocation failed\n");
+		printf(BRED "Image allocation failed\n");
 		return (NULL);
 	}
 	image->img = mlx_xpm_file_to_image(data->mlx, path, &image->w_texture, &image->h_texture);
 	if (!image->img)
 	{
 		free(image);
-		printf("Error in creation new image\n");
+		printf(BRED "Error in creation new image\n");
 		return (NULL);
 	}
 	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->line_length, &image->endian);
@@ -37,7 +36,7 @@ t_img	*create_new_image(t_data *data, char *path)
 	{
 		free(image);
 		mlx_destroy_image(data->mlx, image->img);
-		printf("Error getting image data address\n");
+		printf(BRED "Error getting image data address\n");
 		return (NULL);
 	}
 	return (image);
@@ -79,7 +78,7 @@ float	player_facing(t_data *data)
 
 void	ft_init(t_data *data)
 {
-	data->p = calloc(1, sizeof(t_paleyr));
+	data->p = calloc(1, sizeof(t_player));
     data->ray = calloc(1, sizeof(t_ray));
 	data->img = calloc(1, sizeof(t_img));
     data->p_x = 5;
@@ -99,8 +98,7 @@ int main(int argc, char **argv)
 		return (message("Path" ,"please add a .cub file", FAILURE));
 	data = (t_data){0};
 	if (parsing(&data, argv) != SUCCESS)
-		return (FAILURE);
-
+		return (exit_no_leaks(&data, 1), 1);
     ft_init(&data);
 	data.mlx = mlx_init();
     data.mlx_win = mlx_new_window(data.mlx, data.W_W, data.H_W, "CUB3D_WINDOW");
@@ -110,9 +108,9 @@ int main(int argc, char **argv)
     data.img->addr = mlx_get_data_addr(data.img->img, &data.img->bpp, &data.img->line_length, &data.img->endian);
 	init_texture(&data);
     mlx_loop_hook(data.mlx, render, &data);
-    mlx_hook(data.mlx_win, 02, 1L<<0,  key_hook, &data);
-    mlx_hook(data.mlx_win, 03, 1L<<1,  key_release, &data);
-    mlx_hook(data.mlx_win, 17, 0, close_window, &data);
+    mlx_hook(data.mlx_win, KeyPress, KeyPressMask,  key_hook, &data);
+    mlx_hook(data.mlx_win, KeyRelease, KeyReleaseMask,  key_release, &data);
+    mlx_hook(data.mlx_win, 17l, 0, close_window, &data);
     mlx_loop(data.mlx);
 	return (SUCCESS);
 }

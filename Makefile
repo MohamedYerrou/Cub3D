@@ -1,28 +1,33 @@
 NAME 			= Cub3D
 
-LIBPATH		= utils/Libft
+LIBPATH		= medpart/utils/Libft
 
 LIB				= $(LIBPATH)/libft.a
 
-SRCS 			= main.c utils/Get_next_line/get_next_line.c \
-				utils/Get_next_line/get_next_line_utils.c \
-				medpart/parsing/bring_data.c \
+SRCS 			= main.c \
+				medpart/utils/Get_next_line/get_next_line_utils.c \
+				medpart/utils/Get_next_line/get_next_line.c \
+				medpart/parsing/fill_color_texture.c \
 				medpart/parsing/parsing_utils.c \
+				medpart/parsing/check_borders.c \
+				medpart/parsing/check_texture.c \
 				medpart/parsing/basic_parse.c \
+				medpart/parsing/bring_data.c \
 				medpart/parsing/args_parse.c \
 				medpart/parsing/data_parse.c \
 				medpart/parsing/create_map.c \
-				medpart/parsing/check_borders.c \
-				medpart/parsing/check_texture.c \
-				medpart/parsing/fill_color_texture.c \
 				medpart/parsing/check_map.c \
-				cub3d.c dda_line.c hook.c render.c raycasting.c
+				medpart/exit.c \
+				bilpart/raycasting.c \
+				bilpart/dda_line.c \
+				bilpart/render.c \
+				bilpart/hook.c
 
 OBJS			= ${SRCS:.c=.o}
 
 CC				= cc
 
-CFLAGS			= -Wall -Wextra -Werror -I utils/Libft -g3 #-fsanitize=address
+CFLAGS			= -Wall -Wextra -Werror -Ofast -ffast-math -I utils/Libft -g3 #-fsanitize=address
 
 RM				= rm -f
 

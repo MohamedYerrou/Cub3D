@@ -35,10 +35,10 @@ int	texture_is_valid(t_data *data, t_texdetail *textures)
 		return (message(data->mapdetail.path, "Texture is missing", FAILURE));
 	if (!textures->floor || !textures->roof)
 		return (message(data->mapdetail.path, "colors are missing", FAILURE));
-	if (handle_file_error(textures->north, false) == FAILURE
-		|| handle_file_error(textures->south, false) == FAILURE
-		|| handle_file_error(textures->west, false) == FAILURE
-		|| handle_file_error(textures->east, false) == FAILURE
+	if (handle_file_error(data, textures->north, false) == FAILURE
+		|| handle_file_error(data, textures->south, false) == FAILURE
+		|| handle_file_error(data, textures->west, false) == FAILURE
+		|| handle_file_error(data, textures->east, false) == FAILURE
 		|| check_valid_rgb(textures->floor) == FAILURE
 		|| check_valid_rgb(textures->roof) == FAILURE)
 		return (FAILURE);

@@ -76,7 +76,7 @@ void	parse_file_data(char *path, t_data *data)
 	column = 0;
 	data->mapdetail.line_count = n_of_lines(path);
 	data->mapdetail.path = path;
-	data->mapdetail.file = ft_calloc(data->mapdetail.line_count \
+	data->mapdetail.file = ft_calloc(data->mapdetail.line_count
 			+ 1, sizeof(char *));
 	if (!(data->mapdetail.file))
 	{
