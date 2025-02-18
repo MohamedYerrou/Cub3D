@@ -22,6 +22,7 @@ t_img	*create_new_image(t_data *data, char *path)
 	if (!image)
 	{
 		printf(BRED "Image allocation failed\n");
+		exit_no_leaks(data, 1);
 		return (NULL);
 	}
 	image->img = mlx_xpm_file_to_image(data->mlx, path, &image->w_texture, &image->h_texture);
@@ -29,6 +30,7 @@ t_img	*create_new_image(t_data *data, char *path)
 	{
 		free(image);
 		printf(BRED "Error in creation new image\n");
+		exit_no_leaks(data, 1);
 		return (NULL);
 	}
 	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->line_length, &image->endian);
@@ -37,6 +39,7 @@ t_img	*create_new_image(t_data *data, char *path)
 		free(image);
 		mlx_destroy_image(data->mlx, image->img);
 		printf(BRED "Error getting image data address\n");
+		exit_no_leaks(data, 1);
 		return (NULL);
 	}
 	return (image);

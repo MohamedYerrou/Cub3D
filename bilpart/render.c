@@ -45,6 +45,7 @@ void    render_player(t_data *data)
     if (x < 0 || x >= data->W_W || y < 0 || y >= data->H_W)
     {
         printf(BRED "Player out of bounds! Player position: (%d, %d)\n", x, y);
+        exit_no_leaks(data, 1);
         return;
     }
     my_mlx_put_pixel(data, data->p->player_x, data->p->player_y, 0x0000FF);

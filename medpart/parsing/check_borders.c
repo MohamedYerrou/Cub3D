@@ -1,38 +1,37 @@
 #include "../../cub3d.h"
 
-static int	check_top_or_bottom(char **map_tab, int i, int j)
+int is_out_of_bounds(char **map, int i, int j)
 {
-	if (!map_tab || !map_tab[i] || !map_tab[i][j])
+	if (i == 0 || j == 0 || map[i + 1] == NULL 
+		|| map[i][j + 1] == '\0' || j >= (int)ft_strlen(map[i - 1])
+		|| j >= (int)ft_strlen(map[i + 1]))
 		return (FAILURE);
-	while (map_tab[i][j] == ' ' || map_tab[i][j] == '\t'
-	|| map_tab[i][j] == '\r' || map_tab[i][j] == '\v'
-	|| map_tab[i][j] == '\f')
-		j++;
-	while (map_tab[i][j])
-	{
-		if (map_tab[i][j] != '1')
-			return (FAILURE);
-		j++;
-	}
 	return (SUCCESS);
 }
 
-int	check_map_sides(t_data *data, char **map_tab)
+int check_map_sides(char **map)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
-	if (check_top_or_bottom(map_tab, 0, 0) == FAILURE)
-		return (FAILURE);
-	i = 1;
-	while (i < (data->h_map - 1))
+	i = 0;
+	while (map[i])
 	{
-		j = ft_strlen(map_tab[i]) - 1;
-		if (map_tab[i][j] != '1')
-			return (FAILURE);
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '0' || map[i][j] == 'W' 
+				|| map[i][j] == 'E' || map[i][j] == 'S' 
+				|| map[i][j] == 'N')
+			{
+				if (is_out_of_bounds(map, i, j) == FAILURE ||
+					map[i - 1][j] == ' ' || map[i + 1][j] == ' ' 
+					|| map[i][j - 1] == ' ' || map[i][j + 1] == ' ')
+					return (FAILURE);
+			}
+			j++;
+		}
 		i++;
 	}
-	if (check_top_or_bottom(map_tab, i, 0) == FAILURE)
-		return (FAILURE);
 	return (SUCCESS);
 }

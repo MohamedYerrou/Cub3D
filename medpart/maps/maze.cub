@@ -1,10 +1,10 @@
-F 20,50,50
-C 70,100,150
+F 119,120,100
+C 90,100,200
 
-NO medpart/textures/wood5e.xpm
-SO medpart/textures/wood5f.xpm
-WE medpart/textures/wood5g.xpm
-EA medpart/textures/wood5h.xpm
+NO medpart/textures/wall1.xpm
+SO medpart/textures/wall2.xpm
+WE medpart/textures/wall3.xpm
+EA medpart/textures/wall4.xpm
 
 
 1111111111111111111111111
@@ -16,4 +16,3 @@ EA medpart/textures/wood5h.xpm
 1000000000000000000000001
 1000000000000000000000001
 1111111111111111111111111
-

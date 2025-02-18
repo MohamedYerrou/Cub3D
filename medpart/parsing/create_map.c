@@ -36,12 +36,10 @@ static int	fill_map_tab(t_data *data, char **map_tab, int index)
 		while (data->mapdetail.file[index][j] && data->mapdetail.file[index][j] != '\n')
 		{
 			map_tab[i][j] = data->mapdetail.file[index][j];
-			// printf("%c",  map_tab[i][j]);
 			j++;
 		}
 		while (j < data->w_map)
 			map_tab[i][j++] = '\0';
-		// printf("\n");
 		i++;
 		index++;
 	}
