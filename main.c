@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: myerrou <myerrou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 08:58:09 by myerrou           #+#    #+#             */
+/*   Updated: 2025/02/19 09:18:05 by myerrou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	parsing(t_data *data, char **argv)
 {
-	if (handle_file_error(data, argv[1], true) == FAILURE)
+	if (handle_file_error(argv[1], true) == FAILURE)
 		return (FAILURE);
 	parse_file_data(argv[1], data);
-	if (bring_data(data, data->mapdetail.file) == FAILURE)
+	if (bring_data(data, data->mapdet.file) == FAILURE)
 		return (FAILURE);
 	if (map_is_valid(data, data->map) == FAILURE)
 		return (FAILURE);

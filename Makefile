@@ -1,27 +1,27 @@
 NAME 			= cub3D
 
-LIBPATH		= medpart/utils/Libft
+LIBPATH		= parsing_med/utils/Libft
 
 LIB				= $(LIBPATH)/libft.a
 
 SRCS 			= main.c \
-				medpart/utils/Get_next_line/get_next_line_utils.c \
-				medpart/utils/Get_next_line/get_next_line.c \
-				medpart/parsing/fill_color_texture.c \
-				medpart/parsing/parsing_utils.c \
-				medpart/parsing/check_borders.c \
-				medpart/parsing/check_texture.c \
-				medpart/parsing/basic_parse.c \
-				medpart/parsing/bring_data.c \
-				medpart/parsing/args_parse.c \
-				medpart/parsing/data_parse.c \
-				medpart/parsing/create_map.c \
-				medpart/parsing/check_map.c \
-				medpart/exit.c \
-				bilpart/raycasting.c \
-				bilpart/dda_line.c \
-				bilpart/render.c \
-				bilpart/hook.c
+				parsing_med/utils/Get_next_line/get_next_line_utils.c \
+				parsing_med/utils/Get_next_line/get_next_line.c \
+				parsing_med/parsing/fill_color_texture.c \
+				parsing_med/parsing/parsing_utils.c \
+				parsing_med/parsing/check_borders.c \
+				parsing_med/parsing/check_texture.c \
+				parsing_med/parsing/basic_parse.c \
+				parsing_med/parsing/bring_data.c \
+				parsing_med/parsing/args_parse.c \
+				parsing_med/parsing/data_parse.c \
+				parsing_med/parsing/create_map.c \
+				parsing_med/parsing/check_map.c \
+				parsing_med/exit.c \
+				raycasting_bilal/raycasting.c \
+				raycasting_bilal/dda_line.c \
+				raycasting_bilal/render.c \
+				raycasting_bilal/hook.c
 
 OBJS			= ${SRCS:.c=.o}
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: myerrou <myerrou@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 08:58:05 by myerrou           #+#    #+#             */
+/*   Updated: 2025/02/19 09:18:05 by myerrou          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 #define CUB3D_H
 
@@ -5,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "medpart/utils/Libft/libft.h"
+#include "parsing_med/utils/Libft/libft.h"
 #include <limits.h>
 #include <stdbool.h>
 #include <mlx.h>
@@ -18,7 +30,7 @@
 #define PLAYER_SPEED 10
 #define ROTATION_SPEED (15 * (PI / 180))
 
-// medpart
+// parsing_med
 
 #define BRED    "\e[1;31m"
 #define BGREEN  "\e[1;32m"
@@ -53,7 +65,7 @@ typedef struct s_texdetail
 
 }	t_texdetail;
 
-typedef struct s_mapdetail
+typedef struct s_mapdet
 {
     int			index_end_of_map;
 	int			line_count;
@@ -62,7 +74,7 @@ typedef struct s_mapdetail
 	int			width;
 	char		*path;
 	int			fd;
-} t_mapdetail;
+} t_mapdet;
 
 
 //bilal part
@@ -115,7 +127,7 @@ typedef struct s_data
     t_ray   *ray;
     t_player    *p;
 	t_texdetail	texdetail;
-	t_mapdetail	mapdetail;
+	t_mapdet	mapdet;
 }   t_data;
 
 
@@ -139,7 +151,7 @@ int     render(void *param);
 // med part functions
 int		fill_color_textures(t_data *data, t_texdetail *textures, char *line, int j);
 int		texture_is_valid(t_data *data, t_texdetail *textures);;
-int     handle_file_error(t_data *data, char *arg, bool cub);
+int     handle_file_error(char *arg, bool cub);
 int		create_map(t_data *data, char **file, int i);
 int		message_val(int detail, char *str, int code);
 int		map_is_valid(t_data *data, char **map_tab);
@@ -147,7 +159,7 @@ int		message(char *detail, char *str, int code);
 void	parse_file_data(char *path, t_data *data);
 void	exit_no_leaks(t_data *data, int status);
 int		bring_data(t_data *data, char **map);
-size_t	max_len(t_mapdetail map, int i);
+size_t	max_len(t_mapdet map, int i);
 int		check_map_sides(char **map_tab);
 char	*get_next_line(int fd);
 void	free_tab(void **tab);
