@@ -19,9 +19,10 @@ SRCS 			= main.c \
 				parsing_med/parsing/check_map.c \
 				parsing_med/exit.c \
 				raycasting_bilal/raycasting.c \
-				raycasting_bilal/dda_line.c \
+				raycasting_bilal/utilise.c \
 				raycasting_bilal/render.c \
-				raycasting_bilal/hook.c
+				raycasting_bilal/hook.c \
+				raycasting_bilal/drawing.c
 
 OBJS			= ${SRCS:.c=.o}
 

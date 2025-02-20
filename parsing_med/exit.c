@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myerrou <myerrou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bjniane <bjniane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 08:57:40 by myerrou           #+#    #+#             */
-/*   Updated: 2025/02/19 09:18:05 by myerrou          ###   ########.fr       */
+/*   Updated: 2025/02/20 01:40:18 by bjniane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,29 @@ int	free_data(t_data *data)
 
 void	free_directions(t_data *data)
 {
-	if (data->EA)
+	if (data->ea)
 	{
-		if (data->EA->img)
-			mlx_destroy_image(data->mlx, data->EA->img);
-		free(data->EA);
+		if (data->ea->img)
+			mlx_destroy_image(data->mlx, data->ea->img);
+		free(data->ea);
 	}
-	if (data->WE)
+	if (data->we)
 	{
-		if (data->WE->img)
-			mlx_destroy_image(data->mlx, data->WE->img);
-		free(data->WE);
+		if (data->we->img)
+			mlx_destroy_image(data->mlx, data->we->img);
+		free(data->we);
 	}
-	if (data->NO)
+	if (data->no)
 	{
-		if (data->NO->img)
-			mlx_destroy_image(data->mlx, data->NO->img);
-		free(data->NO);
+		if (data->no->img)
+			mlx_destroy_image(data->mlx, data->no->img);
+		free(data->no);
 	}
-	if (data->SO)
+	if (data->so)
 	{
-		if (data->SO->img)
-			mlx_destroy_image(data->mlx, data->SO->img);
-		free(data->SO);
+		if (data->so->img)
+			mlx_destroy_image(data->mlx, data->so->img);
+		free(data->so);
 	}
 }
 
