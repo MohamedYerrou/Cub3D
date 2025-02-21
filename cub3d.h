@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bjniane <bjniane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: myerrou <myerrou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 08:58:05 by myerrou           #+#    #+#             */
-/*   Updated: 2025/02/20 01:37:44 by bjniane          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:34:16 by myerrou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,6 @@ int					check_map_sides(char **map_tab);
 char				*get_next_line(int fd);
 void				free_tab(void **tab);
 int					spaces(char c);
+int					check_dup(t_data *data, int i, int j);
 
 #endif

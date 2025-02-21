@@ -6,7 +6,7 @@
 /*   By: myerrou <myerrou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 08:57:11 by myerrou           #+#    #+#             */
-/*   Updated: 2025/02/19 09:18:05 by myerrou          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:33:54 by myerrou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,34 @@ static int	ignore_whitespaces_get_info(t_data *data, char **map, int i, int j)
 		return (SUCCESS);
 	}
 	return (CONTINUE);
+}
+
+int	check_dup(t_data *data, int i, int j)
+{
+	int	flag;
+
+	flag = 0;
+	while (j < data->h_map)
+	{
+		i = 0;
+		while (i < data->w_map)
+		{
+			if (flag == 0 && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
+				|| data->map[j][i] == 'W' || data->map[j][i] == 'E'))
+			{
+				flag = 1;
+				data->p_x = i;
+				data->p_y = j;
+				i++;
+			}
+			if (flag == 1 && (data->map[j][i] == 'N' || data->map[j][i] == 'S'
+				|| data->map[j][i] == 'W' || data->map[j][i] == 'E'))
+				return (1);
+			i++;
+		}
+		j++;
+	}
+	return (0);
 }
 
 int	bring_data(t_data *data, char **map)

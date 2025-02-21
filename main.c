@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bjniane <bjniane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: myerrou <myerrou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 08:58:09 by myerrou           #+#    #+#             */
-/*   Updated: 2025/02/20 01:39:38 by bjniane          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:40:41 by myerrou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	ft_init(t_data *data)
 	data->p = calloc(1, sizeof(t_player));
 	data->ray = calloc(1, sizeof(t_ray));
 	data->img = calloc(1, sizeof(t_img));
-	data->p_x = 5;
-	data->p_y = 5;
 	data->w_w = data->w_map * TILE_SIZE;
 	data->h_w = data->h_map * TILE_SIZE;
 	data->p->player_x = data->p_x * TILE_SIZE + TILE_SIZE / 2;
